@@ -1,0 +1,112 @@
+### about the workspace
+
+ls()		# show whats in memory
+ls(*object*)	# show contents of object, access those contents with object$content
+is(*object*)	# shows type of object	
+rm(*object*)  # removes *object* from the workspace
+rm(list=ls()) 	#clear memory
+
+
+
+
+### shortcuts
+CTRL+R    # run command (Windows)
+CMD+ENTER # run command (Mac)
+CTRL+L 		# clear console (Windows + Mac)
+
+ALT+N     # ~ on Mac
+ALTGR++   #? ~ on Windows
+
+
+
+
+### Initialize variables
+
+vector(,length=4)       # filled with FALSE
+matrix(,nrow=4,ncol=5)  # filled with NA
+
+
+
+
+### Debugging
+
+op<- options(error=recover) 	#set on automatic debugger
+options(op)			#set off automatic debugger
+browser()       #enable debugging during a function
+
+system.time(*one command*)   #to measure how long a comand takes
+Sys.Date()	#
+
+
+
+
+### if/else statement vectorized:
+varD <- log(0:9)
+is.finite(varD)
+varD <- ifelse(is.finite(varD), varD, NA)
+
+
+
+
+### Plots
+
+# print plot to pdf:
+pdf('mypdf.pdf') 
+plot(...)
+dev.off()
+
+graphics.off()	#turn off all graphic devices
+
+
+
+### Help Search
+
+library(RSiteSearch) # to search all available help pages of contributed package
+gar <- RSiteSearch.function('GARCH') # for GARCH
+HTML(gar) # to display the results in a web browser
+
+?mean   # for function search
+??mean  # for "about" search in locally installed package docs
+
+
+
+### Difference between NULL, NA and NaN
+
+a  <-  NULL
+a
+length(a) # 0
+typeof(a) # NULL
+is(a)     # "NULL" "OptionalFunction" "optionalMethod"
+
+b  <- NA
+b
+typeof(b) # logical
+is(b)     # "logical" "vector" 
+
+c <- NaN 
+c
+typeof(c) # double
+is(c)     # "numeric" "vector"
+
+
+
+
+### Density vs. CDF 
+
+dnorm gives the density, 				so phi()
+pnorm gives the distribution function = cdf,  		so PHI(1.96)=pnorm(1.96)=0.975
+qnorm gives the quantile function = inverse cdf, 	so PHI^-1(.975)=qnorm(.975)=1.96
+and rnorm generates random deviates.
+
+
+
+
+### Find next friday
+
+nextfri = function(x){
+	7 * ceiling(as.numeric(x-5+4) / 7) + as.Date(5-4)
+}
+	#If x is a vector of class "Date" then nextfri(x) is a vector of the same length with each
+	#component replaced by the date of the next Friday. Friday is represented by 5 in the formula 
+	#so one can change it to 0 for Sunday, 1 for Monday, ..., 6 for Saturday if one wants the
+	#weeks to end on some other day of the week.

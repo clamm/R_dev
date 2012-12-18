@@ -1,17 +1,6 @@
-# to run one line press CMD+ENTER (equivalent to CTRL+R in Windows)
-plot(runif(2000))
-x<- rnorm(100) 
-y<- x+2*rnorm(100)
-
-rm(x) #remove variable from workspace
-
-#note: ~ is found at ALT+N
-reg1 <- lm(y~x)
-summary(reg1)
-plot(reg1)
-
-#What does reg1 contain:
-ls(reg1)
+# ------------------------------------------------------------------------------
+# Try to recompute the Mahout item-based recommendation algorithm:
+# ------------------------------------------------------------------------------
 
 data<- read.table("~/Downloads/ipcount.dat",col.names=c("ip","freq"))
 head(data)
