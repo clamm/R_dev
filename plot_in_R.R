@@ -106,9 +106,11 @@ barplot(a, col=rainbow(length(a)))
 barplot(as.matrix(data), col=heat.colors(length(a)))
 barplot(as.matrix(data), beside=T, col=terrain.colors(length(a)))
 
-require("ggplot2")
+install.packages('ggplot2')
+require('ggplot2')
 ?geom_bar
 
+ggplot(diamonds, aes(clarity)) + geom_bar() + facet_wrap(~ cut)
 
 
 ### histogram with density overlay:
@@ -156,6 +158,82 @@ palette("default") # reset colors back to default
 
 
 ### maps
+
+
+
+### Add boxplots to a scatterplot
+op <- par(fig=c(0,0.8,0,0.8))
+plot(mtcars$wt, mtcars$mpg, xlab="Miles Per Gallon",
+     ylab="Car Weight")
+par(fig=c(0,0.8,0.55,1), new=TRUE)
+boxplot(mtcars$wt, horizontal=TRUE, axes=FALSE)
+par(fig=c(0.65,1,0,0.8),new=TRUE)
+boxplot(mtcars$mpg, axes=FALSE)
+mtext("Enhanced Scatterplot", side=3, outer=TRUE, line=-3)
+par(op)
+
+
+
+### comparison density with boxplot
+n <- 550
+toright <- abs(rnorm(n,mean=15,sd=11) + rnorm(n,mean=10,sd=40))
+dright <- density(toright, from=min(toright), to=max(toright))
+
+toleft <- c(sample(seq(22,28,by=.4), 150, replace=T),
+            sample(seq(25,27.5,by=.1), 500, replace=T),
+            sample(seq(25.5,27.8,by=.02), 300, replace=T),
+            sample(seq(26.5,27.8,by=.001), 500, replace=T))
+dleft <- density(toleft, from=min(toleft), to=max(toleft))
+
+# fig= parameter is a numerical vector of the form c(x1, x2, y1, y2)
+op <- par(fig=c(0,1,0.4,1))
+plot(dright$x, dright$y, xlab='', ylab='Density', t='l',
+     main='Density & Boxplot: skewed to the right')
+#plot mean in density:
+m <- seq(min(dright$y),max(dright$y),length=10)
+points(rep(mean(toright), length(m)), m, pch=3, col='blue')
+#add boxplot:
+par(fig=c(0,1,0,0.6), new=T)
+boxplot(toright, horizontal=T, ylab='Boxplot', xlab='Minutes')
+#plot mean in boxplot:
+mm <- seq(0.5,1.5,length=10)
+points(rep(mean(toright), length(mm)), mm, pch=3, col='blue')
+par(op)
+
+# fig= parameter is a numerical vector of the form c(x1, x2, y1, y2)
+op <- par(fig=c(0,1,0.4,1))
+plot(dleft$x, dleft$y, xlab='', ylab='Density', t='l',
+     main='Density & Boxplot: skewed to the left')
+#plot mean in density:
+m <- seq(min(dleft$y),max(dleft$y),length=10)
+points(rep(mean(toleft), length(m)), m, pch=3, col='blue')
+#add boxplot:
+par(fig=c(0,1,0,0.6), new=T)
+boxplot(toleft, horizontal=T, ylab='Boxplot', xlab='Minutes')
+#plot mean in boxplot:
+mm <- seq(0.5,1.5,length=10)
+points(rep(mean(toleft), length(mm)), mm, pch=3, col='blue')
+par(op)
+
+
+
+### plot within plot: (like zoom into)
+library('MASS')
+data(Animals)
+# fig= parameter is a numerical vector of the form c(x1, x2, y1, y2)
+op <- par(fig=c(0,1,0,1), cex=1.3)
+plot(Animals, main='Body weight vs. brain weight for animals',
+     xlab='body weight in kg', ylab='brain weight in g')
+innerx1 <- 0; innerx2 <- 600; innery1 <- 0; innery2 <- 1600
+rect(innerx1-900,innery1-100,innerx2+900,innery2+100, lwd=2, border='red')
+par(fig=c(0.3,.9,.3,.9), new=T, cex=1.3)
+plot(Animals, xlim=c(innerx1,600), ylim=c(innery1,1600), col='red', axes=F,
+     xlab='body weight in kg', ylab='brain weight in g', col.lab='red')
+axis(1, col='red', col.axis='red')
+axis(2, col='red', col.axis='red')
+box(col='red')
+par(op)
+
 
 
 
