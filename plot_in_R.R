@@ -237,3 +237,29 @@ par(op)
 
 
 
+# Animation - Evolution of density
+library(animation)
+
+n <- 15
+mu <- 6
+mat <- cbind(1:n, rpois(n,lambda=mu))
+
+poisson <- function(mat) {
+  oopt = ani.options(interval = 0.5, nmax = dim(mat)[1]-1)
+  xlim <- c(0,max(mat[,1]))
+  ## use a loop to create images one by one
+  op <- par(mfrow=c(2,1))
+  for (i in 1:ani.options("nmax")) {
+    plot(mat[1:(i+1),], main="x", xlab="n", xlim=xlim, ylim=c(0,max(mat[,2])),
+         ylab=paste("x~Poisson(mu=",mu,")",sep=""))
+    plot(density(mat[1:(i+1),2]), main="Density of x", xlim=xlim, type="l", col="blue")
+    ani.pause()
+  }  
+  par(op)
+}
+
+poisson(mat)
+
+
+
+
