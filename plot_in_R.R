@@ -155,6 +155,15 @@ matplot(scores, t="l", lwd=2, lty=1)
 palette("default") # reset colors back to default
 
 
+# color matching legend
+a <- sample(1:100)
+cuts <- levels(cut(a,breaks = 10))
+cuts <- gsub(","," - ",cuts)
+cuts <- gsub("\\(","[",cuts)
+rbPal <- colorRampPalette(c('red','blue'))
+b <- rbPal(10)[as.numeric(cut(a,breaks = 10))]
+plot(a,col=b,pch=16)
+legend("top",cuts,col=rbPal(10),pch=16)
 
 
 ### maps
