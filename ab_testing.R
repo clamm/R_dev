@@ -57,7 +57,7 @@ persp(N2, P2, pvals_p, theta=115, phi=0, ticktype="detailed", col="light pink",
       main="p value depending on sample size N2 and proportion p2",
       zlim=c(0,1), nticks=5) 
 
-plot(P2, pvals_p[1,], ylim=c(0,0.5), t='n', xlab="p2", ylab="p value",
+plot(P2, pvals_p[1,], ylim=c(0,0.4), t='n', xlab="p2", ylab="p value",
      main="p value for different test sample sizes depending on proportion p2")
 rect(-.2,0,max(N2),alpha, col='lightgrey')
 mtext('accept H1: new feature > old',side=1,line=-1.9,adj=1)
@@ -76,8 +76,8 @@ P2[which(pvals_p[which(N2==100),] < alpha)[1]]
 
 # get for each test sample size the success rate that would be needed to accept
 # the new feature:
-#apply(1:length(N2), MARGIN=2, FUN=function(x){ P2[which(pvals_p[x,] < alpha)[1]] })
+p2_min <- apply(pvals_p, MARGIN=1, FUN=function(x){ P2[which(x < alpha)[1]] })
 
-#cbind(N2,
+cbind(N2,p2_min)
 
 
