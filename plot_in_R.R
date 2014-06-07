@@ -135,6 +135,12 @@ densityplot( ~ height | voice.part, data = singer, layout = c(2, 4),
              xlab = "Height (inches)", bw = 5)
 
 
+### cdf & boypol comparison
+x01 <- seq(0,1,by=.01)
+beta <- dbeta(x01,2,5)
+plot(x01, beta, t='l', col='blue', xlim=c(0,1.5))
+boxplot(beta,add=T,at=1.2)
+
 
 ### automatic colors for lots of lines:
 #names of colors are saved in colors()

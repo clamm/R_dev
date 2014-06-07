@@ -1,3 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+.shell_history
+
+# twitteR related:
+cacert.pem
