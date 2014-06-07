@@ -5,3 +5,6 @@
 
 # twitteR related:
 cacert.pem
+
+#Mac related:
+.DS_Store
