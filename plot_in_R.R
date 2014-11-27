@@ -277,4 +277,15 @@ poisson(mat)
 
 
 
+#### scatter plot error bars
+df <- data.frame(x = rep(1:10,each=5), y = rnorm(50))
+#calculate mean, min and max for each x-value
+library(plyr)
+df2 <- ddply(df,.(x),function(df) c(mean=mean(df$y),min=min(df$y),max=max(df$y)))
+#plot error bars
+library(Hmisc)
+with(df2,errbar(x,mean,max,min))
+grid(nx=NA,ny=NULL)
+
+
 
