@@ -113,6 +113,30 @@ require('ggplot2')
 ggplot(diamonds, aes(clarity)) + geom_bar() + facet_wrap(~ cut)
 
 
+# bar plot where bar height represents value of a variable :
+# --> stat="identity"
+df <- data.frame(time = factor(c("Lunch","Dinner"), levels=c("Lunch","Dinner")),
+                 total_bill = c(14.89, 17.23))
+ggplot(data=df, aes(x=time, y=total_bill, fill=time)) +
+  geom_bar(colour="black", stat="identity") +
+  guides(fill=FALSE) # disable legend since redundant info
+
+
+# bar plot of 1 variable where bar height represents count of level in group:
+# --> stat="bin"
+library(reshape2)
+str(tips)
+ggplot(data=tips, aes(x=day)) + geom_bar(stat="bin")
+
+# bar plot of multiple variables:
+df1 <- data.frame(sex       = factor(c("Female","Female","Male","Male")),
+                  time       = factor(c("Lunch","Dinner","Lunch","Dinner"), levels=c("Lunch","Dinner")),
+                  total_bill = c(13.53, 16.81, 16.24, 17.42)) #could represent mean
+ggplot(data=df1, aes(x=time, y=total_bill, fill=sex)) + 
+  geom_bar(stat="identity", position=position_dodge())
+
+
+
 ### histogram with density overlay:
 hist(mtcars$mpg,xlab="Miles per Gallon", prob=T)
 lines(density(mtcars$mpg), col="blue")
@@ -135,7 +159,7 @@ densityplot( ~ height | voice.part, data = singer, layout = c(2, 4),
              xlab = "Height (inches)", bw = 5)
 
 
-### cdf & boypol comparison
+### cdf & boxplot comparison
 x01 <- seq(0,1,by=.01)
 beta <- dbeta(x01,2,5)
 plot(x01, beta, t='l', col='blue', xlim=c(0,1.5))
