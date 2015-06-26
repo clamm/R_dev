@@ -137,6 +137,14 @@ ggplot(data=df1, aes(x=time, y=total_bill, fill=sex)) +
 
 
 
+### pie chart:
+df2 <- data.frame(prop.table(table(mtcars$gear)))
+names(df2) <- c("gears", "count")
+p <- ggplot(data=df2, aes(x="", y=count, fill=gears))
+p <- p + geom_bar(width=1, stat="identity") + coord_polar(theta="y")
+
+
+
 ### histogram with density overlay:
 hist(mtcars$mpg,xlab="Miles per Gallon", prob=T)
 lines(density(mtcars$mpg), col="blue")
